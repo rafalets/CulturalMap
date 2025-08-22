@@ -1,0 +1,127 @@
+////////// header toolbar ////////// header toolbar ////////// header toolbar ////////// header toolbar ////////// header toolbar //////////
+.header-toolbar {
+    position: absolute;
+    top: 0;
+    height: 64px;
+    width: 100%;
+    background-color: var(--color-primary);
+    box-shadow: 0 1px 2px -1px var(--color-secondary) !important;
+    z-index: 3 !important;
+}
+
+.header-toolbar-logo {
+    height: 70%;
+}
+
+.header-toolbar-title {
+    color: var(--color-accent);
+    padding-left: 30px;
+}
+
+.header-toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+
+////////// total-container ////////// total-container ////////// total-container ////////// total-container ////////// total-container //////////
+.total-container {
+    position: absolute;
+    top: 64px;
+    bottom: 40px;
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+}
+
+.container-left {
+    height: 100%;
+    width: 70%;
+}
+
+.container-right {
+    height: 100%;
+    width: 30%;
+}
+
+
+////////// footer-toolbar ////////// footer-toolbar ////////// footer-toolbar ////////// footer-toolbar ////////// footer-toolbar //////////
+.footer-toolbar {
+    position: absolute;
+    bottom: 0;
+    height: 40px;
+    width: 100%;
+    background-color: var(--color-primary);
+    box-shadow: 0 -1px 2px -1px var(--color-secondary) !important;
+    z-index: 3 !important;
+}
+
+
+///////////////////////////////////////// SPINNER ///////////////////////////////////////////////
+
+.container-spinner-disabled {
+    z-index: 10;
+    background-color: rgba($color: #ffffff, $alpha: 0.5);
+    position: fixed;
+    top: 64px;
+    bottom: 40px;
+    right: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 30%;
+    // height: calc(100% - 104px);
+}
+
+.container-spinner-disabled-map {
+    z-index: 10;
+    background-color: rgba($color: #ffffff, $alpha: 0.5);
+    position: fixed;
+    top: 64px;
+    bottom: 40px;
+    left: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 70%;
+    // height: calc(100% - 104px);
+}
+
+.spinner-align {
+    height: 200px;
+    width: 200px;
+    z-index: 11;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+@media screen and (max-width: 768px) {
+
+    .mobile-title {
+        display: none;
+    }
+
+    .container {
+        flex-direction: column;
+    }
+
+    .container-left {
+        height: 65%;
+        width: 100%;
+    }
+
+    .container-right {
+        height: 35%;
+        width: 100%;
+    }
+
+}

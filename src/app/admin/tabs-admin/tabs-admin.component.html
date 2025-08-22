@@ -1,0 +1,16 @@
+<div style="height:100%; width:100%;">
+    <mat-tab-group animationDuration="0ms" style="height: 100%; width: 100%;">
+        <mat-tab label="Εκδηλώσεις">
+            <app-events-admin></app-events-admin>
+        </mat-tab>
+        <mat-tab>
+            <ng-template mat-tab-label>
+                <span [ngClass]="{ 'blink': DataService.statusTable.length !== 0 }">
+                    Εκκρεμότητες
+                </span>
+            </ng-template>
+            <app-status-admin></app-status-admin>
+        </mat-tab>
+    </mat-tab-group>
+
+</div>

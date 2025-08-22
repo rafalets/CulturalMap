@@ -1,0 +1,66 @@
+<div style="height:100%; width:100%">
+
+    <div style="height: calc(100% - 30px); width:100%; border-bottom: black solid 1px;">
+        @if(tableEvents.length !=0){
+        <div style="height: 100%; overflow-y: auto;">
+            @for(item of tableEvents; track item){
+            <div
+                style="width: calc(100% - 10px); padding-left: 5px; padding-right: 5px; padding-top: 10px; padding-bottom: 10px; border-bottom: black solid 1px; display: flex; flex-direction: column; align-items: center; justify-content: center; ">
+                <div style="margin-top: 3px;">{{item.attributes.title}}</div>
+                @if(item.attributes.date_from != null && item.attributes.date_to != null){
+                <div style="margin-top: 3px;">{{item.attributes.date_from}} - {{item.attributes.date_to}}</div>
+                }
+                @if(item.attributes.date_from != null && item.attributes.date_to == null){
+                <div style="margin-top: 3px;">{{item.attributes.date_from}}</div>
+                }
+                @if(item.attributes.date_from == null && item.attributes.date_to == null){
+                <div style="margin-top: 3px;"> - </div>
+                }
+                @if(item.attachments.length != 0){
+                <div style="height: 200px; width:100%; margin-top: 3px;">
+                    <ng-image-slider [images]="item.attachments" [infinite]="infinite" [imagePopup]="imagePopup"
+                        [animationSpeed]="animationSpeed" [slideImage]="slideImage" [imageSize]="imageSize"
+                        [manageImageRatio]="manageImageRatio" [autoSlide]="autoSlide" [showArrow]="showArrow"
+                        [arrowKeyMove]="arrowKeyMove" [videoAutoPlay]="videoAutoPlay"
+                        [showVideoControls]="showVideoControls" [direction]="direction" [lazyLoading]="lazyLoading"
+                        [defaultActiveImage]="defaultActiveImage">
+                    </ng-image-slider>
+                </div>
+                }
+                @if(item.attributes.description != null){
+                <div style="margin-top: 3px;">{{item.attributes.description}}</div>
+                }
+                <div style="cursor: pointer; margin-top: 3px; display: flex; align-items: center;"
+                    (click)="place(item.geometry.x, item.geometry.y)">
+                    <span>Τοποθεσία </span>
+                    <mat-icon>location_on</mat-icon>
+                </div>
+                @if(item.attributes.link !=""){
+                <div style="margin-top: 3px;">
+                    <a href={{item.attributes.link}} target="_blank">Link</a>
+                </div>
+                }
+                <div class="flex-position-bottom-buttons">
+                    <button mat-raised-button class="primary-button radius-buttons"
+                        (click)="edit(item.attributes.OBJECTID)">Τροποποίηση</button>
+                    <span class="spacer-position-bottom-buttons"></span>
+                    <button mat-raised-button class="delete-primary-button radius-buttons"
+                        (click)="cancel(item.attributes.OBJECTID)">Ακύρωση</button>
+                </div>
+            </div>
+            }
+        </div>
+        }@else {
+        <div style="height: 100%; width:100%; display: flex; align-items: center; justify-content: center;">
+            <span>Δεν υπάρχουν εκδηλώσεις</span>
+        </div>
+        }
+    </div>
+    <div class="position-bottom-buttons">
+        <div style="display: flex; align-items: center;">
+            <mat-icon class="radius-buttons" style="cursor: pointer;" (click)="addEvents()">add</mat-icon>
+            <div style="margin-left: 5px; cursor: pointer;" (click)="addEvents()">Προσθήκη νέας εκδήλωσης</div>
+        </div>
+    </div>
+
+</div>

@@ -1,0 +1,55 @@
+@import "https://js.arcgis.com/4.25/esri/themes/light/main.css";
+
+.container-map {
+    width: 100%;
+    height: 100%;
+}
+
+.map {
+    height: 100%;
+    width: 100%;
+}
+
+.add-point-not-select {
+    height: 32px;
+    width: 32px;
+    background-color: white;
+}
+
+.add-point-select {
+    height: 32px;
+    width: 32px;
+    background-color: rgb(184, 179, 179);
+}
+
+.add-cursor {
+    cursor: crosshair;
+    /* Ή pointer, cell, alias, ή custom URL */
+}
+
+
+
+::ng-deep .esri-editor__panel-toolbar {
+    display: none;
+}
+
+::ng-deep .esri-widget__heading {
+    display: none;
+}
+
+::ng-deep .esri-editor__feature-templates-container {
+    display: none;
+}
+
+::ng-deep .esri-editor__panel-content {
+    min-height: auto !important;
+}
+
+::ng-deep .esri-editor__panel-content__section {
+    padding: 2px !important;
+}
+
+::ng-deep .esri-feature__content-element .esri-feature-attachments {
+    height: 300px !important;
+    overflow-y: auto !important;
+}

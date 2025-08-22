@@ -1,0 +1,109 @@
+////////// header toolbar ////////// header toolbar ////////// header toolbar ////////// header toolbar ////////// header toolbar //////////
+.toolbar-dialog {
+    font-size: 14px;
+    height: 30px;
+    background-color: #212330;
+    color: white;
+    padding-left: 15px;
+    padding-right: 0;
+}
+
+.toolbar-spacer {
+    flex: 1 1 auto;
+}
+
+// Το hover του button (X) να μην είναι κύκλος.
+::ng-deep .mat-mdc-icon-button .mat-mdc-button-persistent-ripple {
+    border-radius: 0%;
+}
+
+
+////////// container ////////// container ////////// container ////////// container ////////// container //////////
+.popup-container {
+    height: 60vh;
+    width: 30vw;
+    padding: 10px !important;
+}
+
+.align-popup-container {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.informations-popup-container {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    overflow-y: auto;
+    margin-bottom: 10px;
+    overflow-x: hidden;
+}
+
+.form-informations-popup-container {
+    height: calc(100% - 20px);
+    width: 100%;
+    text-align: center;
+}
+
+.images-popup-container {
+    height: 50%;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: black solid 1px;
+}
+
+.images-popup-container-events {
+    height: 45%;
+    width: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    border: black solid 1px;
+}
+
+::ng-deep .ng-image-slider .ng-image-slider-container .main .main-inner .img-div {
+    background-image: none !important;
+}
+
+::ng-deep .ng-image-slider {
+    height: 100% !important;
+    display: block !important;
+}
+
+::ng-deep .main {
+    height: 100% !important;
+}
+
+.remove-image-div {
+    width: 100%;
+}
+
+.remove-image-div :hover {
+    background-color: rgba(255, 0, 0, 0.1);
+}
+
+.remove-image-icon {
+    float: right;
+    cursor: pointer;
+}
+
+.errors-texts {
+    color: #AC2222
+}
+
+.disabled-button {
+    background-color: #e9e7e7;
+    cursor: auto;
+}
+
+.cursor-button {
+    cursor: pointer
+}

@@ -1,0 +1,112 @@
+<!-- header toolbar ////////// header toolbar ////////// header toolbar ////////// header toolbar ////////// header toolbar ////////// -->
+<mat-toolbar class="toolbar-dialog">
+    <div>
+        Προσθήκη νέου σημείου στον χάρτη
+    </div>
+    <span class="toolbar-spacer"></span>
+    <button mat-icon-button mat-dialog-close class="delete-button-pupups">
+        <mat-icon>close</mat-icon>
+    </button>
+</mat-toolbar>
+
+<!-- container ////////// container ////////// container ////////// container ////////// container ////////// -->
+<mat-dialog-content class="popup-container">
+
+    <div class="align-popup-container">
+        <div class="informations-popup-container">
+            <form class="form-informations-popup-container" [formGroup]="newPointControls">
+                <mat-form-field [appearance]="'outline'" style="width: 100%; margin-top: 10px;">
+                    <mat-label>Κατηγορία</mat-label>
+                    <mat-select (selectionChange)="changeCategory($event)" formControlName="categoryControlAddPoint">
+                        <mat-option [value]=""></mat-option>
+                        @for (item of categoriesTable; track item) {
+                        <mat-option [value]="item.code">{{item.name}}</mat-option>
+                        }
+                    </mat-select>
+                </mat-form-field>
+
+                @if(selectedCategory==undefined){
+                <div style="height: calc(100% - 36px); display: flex; align-items: center; justify-content: center;">
+                    <span>Επιλέξτε κάποια κατηγορία</span>
+                </div>
+                }@else{
+
+                @for(item of categoriesTable; track item){
+                @if(selectedCategory==item.code){
+                <mat-form-field [appearance]="'outline'" style="width: 100%; margin-top: 10px;">
+                    <mat-label>{{item.category}}</mat-label>
+                    <input matInput formControlName="nameControlAddPoint">
+                </mat-form-field>
+                }
+                }
+
+                <mat-form-field [appearance]="'outline'" style="width: 100%; margin-top: 10px;">
+                    <mat-label>Περιγραφή</mat-label>
+                    <textarea matInput formControlName="descriptionControlAddPoint"></textarea>
+                </mat-form-field>
+
+                <div style="width:100%; margin-top: 10px;">
+                    <mat-form-field [appearance]="'outline'" style="width: 49%; margin-right: 2%;">
+                        <mat-label>Γεωγραφικό πλάτος (φ)</mat-label>
+                        <input matInput value="{{DataService.latitude}}" formControlName="latControlAddPoint">
+                    </mat-form-field>
+                    <mat-form-field [appearance]="'outline'" style="width: 49%;">
+                        <mat-label>Γεωγραφικό μήκος (λ)</mat-label>
+                        <input matInput value="{{DataService.longitude}}" formControlName="longControlAddPoint">
+                    </mat-form-field>
+                </div>
+
+                }
+
+
+            </form>
+        </div>
+        <div class="images-popup-container">
+            @if(DataService.tableAddImagesPointsUser.length != 0){
+            <div class="remove-image-div">
+                <mat-icon class="remove-image-icon" mat-icon-button color="warn"
+                    (click)="removeImages(slider.visiableImageIndex)">close</mat-icon>
+            </div>
+            }
+            <div style="height: 100%; width:100%">
+                @if(DataService.tableAddImagesPointsUser.length != 0){
+                <ng-image-slider [images]="DataService.tableAddImagesPointsUser" [infinite]="infinite" [imagePopup]="imagePopup"
+                    [animationSpeed]="animationSpeed" [slideImage]="slideImage" [imageSize]="imageSize"
+                    [manageImageRatio]="manageImageRatio" [autoSlide]="autoSlide" [showArrow]="showArrow"
+                    [arrowKeyMove]="arrowKeyMove" [videoAutoPlay]="videoAutoPlay"
+                    [showVideoControls]="showVideoControls" [direction]="direction" [lazyLoading]="lazyLoading"
+                    [defaultActiveImage]="defaultActiveImage">
+                </ng-image-slider>
+                }@else{
+                <div [ngClass]="{'errors-texts': insertImagesAddPointText == true}"
+                    style="height: 100%; width:100%; display: flex; justify-content: center; align-items: center; text-align: center;">
+                    Εισαγωγή εικόνων*
+                </div>
+                }
+            </div>
+            @if(DataService.tableAddImagesPointsUser.length != 0){
+            @if(slider){
+            <div>
+                {{slider.visiableImageIndex + 1}} / {{DataService.tableAddImagesPointsUser.length}}
+            </div>
+            }
+            }
+            <div style="margin-top:5px; margin-bottom:5px">
+                <button mat-mini-fab [ngClass]="disaledButtons? 'disabled-button' : 'primary-button cursor-button'"
+                    [disabled]="disaledButtons" class="radius-buttons" (click)="fileInputImages.click()"
+                    matTooltip="Upload image">
+                    <mat-icon>upload</mat-icon>
+                </button>
+                <input type="file" #fileInputImages style="display: none;" (change)="uploadImages($event)" multiple
+                    accept="image/png, image/gif, image/jpeg, image/jpg">
+            </div>
+        </div>
+    </div>
+
+
+</mat-dialog-content>
+<mat-dialog-actions align="end">
+    <button mat-stroked-button cdkFocusInitial [disabled]="disaledButtons"
+        [ngClass]="disaledButtons? 'disabled-button' : 'primary-button cursor-button'"
+        (click)="addEvent()">Υποβολή</button>
+</mat-dialog-actions>

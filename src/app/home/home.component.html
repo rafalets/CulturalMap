@@ -1,0 +1,39 @@
+<!-- header toolbar ////////// header toolbar ////////// header toolbar ////////// header toolbar ////////// header toolbar ////////// -->
+<mat-toolbar class="header-toolbar">
+    <img src="logo.jpeg" class="header-toolbar-logo">
+    <span class="header-toolbar-title"><span class="mobile-title">Χάρτης Πολιτιστικής Κληρονομιάς της</span> Δ.Κ.
+        Σοχού</span>
+    <span class="header-toolbar-spacer"></span>
+</mat-toolbar>
+
+
+<!-- container ////////// container ////////// container ////////// container ////////// container ////////// -->
+<div class="total-container">
+    <div class="container">
+        <div class="container-left">
+            @if (DataService.loadingSpinnerMapUser){
+                <div class="container-spinner-disabled-map">
+                    <div class="spinner-align">
+                        <mat-spinner></mat-spinner>
+                    </div>
+                </div>
+                }
+            <app-map></app-map>
+        </div>
+        <div class="container-right">
+            @if (loading){
+            <div class="container-spinner-disabled">
+                <div class="spinner-align">
+                    <mat-spinner></mat-spinner>
+                </div>
+            </div>
+            }
+            <app-events></app-events>
+        </div>
+    </div>
+</div>
+
+<!-- footer-toolbar ////////// footer-toolbar ////////// footer-toolbar ////////// footer-toolbar ////////// footer-toolbar ////////// -->
+<mat-toolbar class="footer-toolbar">
+
+</mat-toolbar>

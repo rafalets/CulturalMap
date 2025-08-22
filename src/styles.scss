@@ -1,0 +1,17 @@
+
+
+@use '@angular/material' as mat;
+
+@import url("./theme.scss");
+
+html {
+  color-scheme: light dark;
+  @include mat.theme((
+    // color: mat.$violet-palette,
+    typography: Roboto,
+    density: -5
+  ));
+}
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }

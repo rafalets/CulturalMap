@@ -1,0 +1,233 @@
+// Import angular.
+import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
+
+// Import material.
+import { MatIconModule } from '@angular/material/icon';
+import { MatButtonModule } from '@angular/material/button';
+import { TooltipPosition, MatTooltipModule } from '@angular/material/tooltip';
+import { MatDialog } from '@angular/material/dialog';
+
+// Import esri.
+import MapView from "@arcgis/core/views/MapView.js";
+import WebMap from "@arcgis/core/WebMap.js";
+import BasemapGallery from "@arcgis/core/widgets/BasemapGallery.js";
+import Expand from '@arcgis/core/widgets/Expand.js';
+import FeatureLayer from "@arcgis/core/layers/FeatureLayer.js";
+import Home from "@arcgis/core/widgets/Home.js";
+import Search from "@arcgis/core/widgets/Search.js";
+import Legend from "@arcgis/core/widgets/Legend.js";
+import Editor from "@arcgis/core/widgets/Editor.js";
+
+
+
+// Import component.
+import { FormAdminComponent } from './form-admin/form-admin.component';
+import { DataService } from '../../../services/data.service';
+@Component({
+  selector: 'app-map-admin',
+  imports: [
+    CommonModule,
+
+    MatIconModule,
+    MatButtonModule,
+    MatTooltipModule,
+  ],
+  templateUrl: './map-admin.component.html',
+  styleUrl: './map-admin.component.scss'
+})
+export class MapAdminComponent {
+
+  constructor(
+    // Απαραίτητο για τη δημιουργία του πίνακα και των Popups.
+    public dialog: MatDialog,
+    public DataService: DataService,
+  ) { }
+
+  adding: boolean = false;
+
+  myMap: any = null
+  mapView: any = null
+
+  ngOnInit() {
+
+    // Δημιουγία χάρτη.
+    // var myMap = new WebMap({
+    this.myMap = new WebMap({
+      basemap: 'hybrid'
+    });
+
+
+    // var mapView = new MapView({
+    this.mapView = new MapView({
+      map: this.myMap,
+      container: "viewMap",
+      extent: { // Συντεταγμένες Σοχού.
+        xmin: 23.332325,
+        ymin: 40.807975,
+        xmax: 23.377558,
+        ymax: 40.824120,
+        spatialReference: {
+          "wkid": 4326
+        }
+      },
+    });
+    this.DataService.mapViewAdmin = this.mapView
+
+    this.mapView.on("click", (event: any) => {
+      if (this.adding) {
+        const point = event.mapPoint;
+        if (point) {
+          // Ανάκτηση συντεταγμένων (εξαρτάται από το spatialReference του mapView)
+          console.log("Συντεταγμένες (γεωγραφικές): ", point.latitude, point.longitude);
+
+          this.DataService.latitudeAdmin = parseFloat(point.latitude.toFixed(5)); // Κρατάει 5 δεκαδικά (φ).
+          this.DataService.longitudeAdmin = parseFloat(point.longitude.toFixed(5)); // Κρατάει 5 δεκαδικά (λ).
+
+          this.openDialogDetails(1)
+
+          // Απενεργοποιούμε το add mode μετά την επιλογή
+          this.adding = false;
+        }
+      }
+    });
+
+    this.mapView.when(() => {
+      // Προσθέτουμε το κουμπί στην κορυφή αριστερά
+      const btn = document.getElementById("addPointBtn");
+      if (btn) {
+        this.mapView.ui.add(btn, "top-right");
+      }
+    });
+
+
+
+
+    // Η λίστα με τα Layers.
+    var layerList: any = [
+      {
+        url: "https://services6.arcgis.com/f36cxNuTmfCJN313/ArcGIS/rest/services/POLITISTIKA/FeatureServer/0",
+        name: "Churches",
+        id: "ba37ca1414cc4647958b8b5829a9289a",
+        indexId: 0,
+      },
+      {
+        url: "https://services6.arcgis.com/f36cxNuTmfCJN313/ArcGIS/rest/services/POLITISTIKA/FeatureServer/1",
+        name: "Museums",
+        id: "ba37ca1414cc4647958b8b5829a9289a",
+        indexId: 1,
+      }
+    ]
+    console.log(layerList)
+
+
+
+    // Δημιουργία Feature Layer.
+    for (let i in layerList) {
+      let layers = new FeatureLayer({
+        // url: layerList[i].url, // Περιττό να υπάρχει αφού εκμεταλλεύομαι τα id του κάθε layer.
+        definitionExpression: "status = '1'", // Να δέχεται όσο έχει δημουργήσει ή αποδεχτεί ο admin.
+        portalItem: {
+          id: layerList[i].id // Απαραίτητο για την ενημέρωση των popup και style μέσω arcgis online.
+        },
+        layerId: layerList[i].indexId, // Απαραίτητο για την ενημέρωση των popup και style μέσω arcgis online.
+      });
+      this.myMap.layers.add(layers);
+    }
+
+
+
+    // Να εμφανίζουν popup τα layers.
+    this.mapView.popup!.defaultPopupTemplateEnabled = true;
+
+    // Δημιουργία του BasemapGallery
+    var basemapGallery = new BasemapGallery({
+      view: this.mapView
+    });
+
+    // Δημιουργία Home για την επιστροφή στο αρχικό σημείο του χάρτη.
+    var homeWidget = new Home({
+      view: this.mapView
+    });
+    this.mapView.ui.add(homeWidget, "top-left");
+
+    // Δημιουργία αναζήτησης πάνω στον χάρτη.
+    // var searchWidget = new Search({
+    //   view: mapView,
+    // });
+    // mapView.ui.add(searchWidget, "top-right");
+
+    // Δημιουργία του Search widget
+    const searchWidget = new Search({
+      view: this.mapView
+    });
+
+    // Δημιουργία του Expand widget που τυλίγει το Search widget
+    const expandSearch = new Expand({
+      view: this.mapView,
+      content: searchWidget,
+      expanded: false
+    });
+
+    // Προσθήκη του Expand widget στο UI
+    this.mapView.ui.add(expandSearch, "top-left");
+
+    // Δημιουργία του Expand widget που θα περιέχει το basemapGallery.
+    var basemapExpand = new Expand({
+      view: this.mapView,
+      content: basemapGallery,
+    });
+    this.mapView.ui.add(basemapExpand, {
+      position: "top-left"
+    });
+
+    // Υπόμνημα.
+    let legend = new Legend({
+      view: this.mapView
+    });
+
+    // Δημιουργία του Expand widget που θα περιέχει το Υπόμνημα
+    var legendExpand = new Expand({
+      view: this.mapView,
+      content: legend,
+    });
+    this.mapView.ui.add(legendExpand, {
+      position: "top-left"
+    });
+
+
+    const editor = new Editor({
+      view: this.mapView,
+      
+    });
+    
+    this.mapView.ui.add(editor, "top-right");
+
+
+    // Μεταφορά συνάρτησης onAddButtonClick().
+    this.DataService
+      .newPointInMap$
+      .subscribe(() => this.onAddButtonClick());
+
+  }
+
+
+  onAddButtonClick(): void {
+    this.DataService.openEventPopup = false; // Pupop νέο σημείο.
+    this.adding = true;
+    console.log("Add mode ενεργοποιημένο. Επιλέξτε ένα σημείο στον χάρτη.");
+
+  }
+
+  openDialogDetails(id: any) {
+    const ref = this.dialog.open(FormAdminComponent, {
+      autoFocus: false,
+      disableClose: true, // Δεν κλείνει όταν κάνεις κλικ εκτός
+    });
+    this.DataService.popupAddEvent = ref; // Ορίζω το dialog στο service ώστε να μπορώ να κλείνω το Popup από άλλο Component.
+    ref.afterClosed().subscribe(() => { // Να μην γεμίζει η μνήμη.
+      this.DataService.popupAddEvent = null;
+    });
+  }
+
+}

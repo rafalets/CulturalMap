@@ -1,0 +1,1 @@
+function c(e,r,t){for(let o=0;o<t;++o)r[2*o]=e[o],r[2*o+1]=e[o]-r[2*o]}function l(e,r){let t=e.length;for(let o=0;o<t;++o)n[0]=e[o],r[o]=n[0];return r}function u(e,r){let t=e.length;for(let o=0;o<t;++o)n[0]=e[o],n[1]=e[o]-n[0],r[o]=n[1];return r}var n=new Float32Array(2);export{c as a,l as b,u as c};

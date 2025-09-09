@@ -1,0 +1,1 @@
+function o(a){let t=3.141592653589793,n=.3183098861837907;a.vertex.constants.add("PI","float",t),a.fragment.constants.add("PI","float",t),a.fragment.constants.add("LIGHT_NORMALIZATION","float",n),a.fragment.constants.add("INV_PI","float",n),a.fragment.constants.add("HALF_PI","float",1.570796326794897),a.fragment.constants.add("TWO_PI","float",6.28318530717958)}export{o as a};

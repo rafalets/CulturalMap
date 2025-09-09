@@ -1,0 +1,1 @@
+import{e as c}from"./chunk-C7INQGWT.js";function y(t,o,n){let i,e;return o===void 0?(e=t,i=[void 0]):typeof o!="string"?(e=t,i=[void 0],n=o):(e=o,i=Array.isArray(t)?t:[t]),(p,s)=>{let w=p.constructor.prototype;for(let a of i){let r=c(p,a,e);r.write&&typeof r.write=="object"||(r.write={}),n&&(r.write.target=n),r.write.writer=w[s]}}}export{y as a};

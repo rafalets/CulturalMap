@@ -1,0 +1,1 @@
+import{e as t}from"./chunk-ZWYEIB75.js";var s=class extends t{constructor(r,e,i,o,a){super(r,e),this.layerUid=r,this.graphicUid=e,this.triangleNr=i,this.baseBoundingSphere=o,this.numLodLevels=a}};export{s as a};

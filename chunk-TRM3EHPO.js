@@ -1,0 +1,1 @@
+import{a as r}from"./chunk-QEPZFICI.js";import"./chunk-XCZSU4MC.js";import{f as o}from"./chunk-VTHXE323.js";function n(){return o(this,null,function*(){return r.sort().map(t=>({label:t}))})}export{n as groupByName};

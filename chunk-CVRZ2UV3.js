@@ -1,0 +1,1 @@
+var x={max:"320px"},a={max:"476px"},p={max:"768px"},s={max:"1152px"},m="8px",e="12px",o="16px",r="2px",t="0.25rem",c="0.5rem";export{x as a,a as b,p as c,s as d,m as e,e as f,o as g,r as h,t as i,c as j};

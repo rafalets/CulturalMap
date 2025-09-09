@@ -1,0 +1,2 @@
+import{b as l,c}from"./chunk-4N7OCQ2R.js";var b=(n,f,i)=>{let u=l(f),p=new RegExp(u,"i");n.length===0&&console.warn(`No data was passed to the filter function.
+    The data argument should be an array of objects`);let o=(r,a,s)=>{if(r?.constant||r?.filterDisabled)return!0;let e=!1;return c(r,(t,d)=>{typeof t=="function"||t==null||s&&!s.includes(d)||(Array.isArray(t)||typeof t=="object"&&t!==null?o(t,a)&&(e=!0):a.test(t)&&(e=!0))}),e};return n.filter(r=>o(r,p,i))};export{b as a};

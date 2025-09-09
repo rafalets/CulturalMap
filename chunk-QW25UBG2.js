@@ -1,0 +1,1 @@
+function u(s,r,a){if(!r||!s?.map)return;let{map:n}=s,e=n.layers.find(l=>l===r);e||n.add(r,a),e&&a!=null&&n.layers.reorder(e,a)}function t(s,r){let a=r?.type==="subtype-sublayer"?r.parent:r;return s.allLayerViews.find(n=>{let e=n.layer;return e===a||"sublayers"in e&&e.sublayers!=null&&e.sublayers.includes(a)})}export{u as a,t as b};

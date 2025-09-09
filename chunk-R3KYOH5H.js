@@ -1,0 +1,1 @@
+import{a}from"./chunk-J5MXC6AL.js";var l=new a("cyan"),t=1,o=.25,i=new a("black"),r=.4,d=.2,s=.25,f="default",c="temporary",h=new a("yellow");export{l as a,t as b,o as c,i as d,r as e,d as f,s as g,f as h,c as i,h as j};

@@ -1,0 +1,1 @@
+import{e,v as r}from"./chunk-5RWLLGQU.js";var c={textMatch:"text-match"};function o({text:a,pattern:s}){if(!s||!a)return a;let t=a.split(s);return t.length>1&&(t[1]=e`<mark class=${r(c.textMatch)}>${t[1]}</mark>`),t}export{o as a};

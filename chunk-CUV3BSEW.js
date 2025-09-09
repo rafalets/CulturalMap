@@ -1,0 +1,2 @@
+import{a as r}from"./chunk-47NSYSFY.js";import{a as e}from"./chunk-RWCIDBNQ.js";function l(o,d){d.hasVertexColors?(o.attributes.add(e.COLOR,"vec4"),o.varyings.add("vColor","vec4"),o.vertex.code.add(r`void forwardVertexColor() { vColor = color; }`),o.vertex.code.add(r`void forwardNormalizedVertexColor() { vColor = color * 0.003921568627451; }`)):o.vertex.code.add(r`void forwardVertexColor() {}
+void forwardNormalizedVertexColor() {}`)}export{l as a};

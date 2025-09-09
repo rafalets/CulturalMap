@@ -1,0 +1,1 @@
+import{b as o,c as r}from"./chunk-XCZSU4MC.js";var t="Global";function i(n){return o(n).countries.length===0}function a(n){if(i(n))return t;let e=n.indexOf("/");return e===-1?n:n.slice(0,e)}function c(n){return r(n)?.id??n}export{t as a,a as b,c};

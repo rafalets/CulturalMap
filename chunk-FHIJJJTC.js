@@ -1,0 +1,1 @@
+import{i as t}from"./chunk-VTHXE323.js";function c(f,i){if(f&&i){for(let o of f.children)if(o.localName in i){let n=i[o.localName];if(typeof n=="function"){let e=n(o);e&&c(o,e)}else c(o,n)}}}function*l(f,i){for(let o of f.children)if(o.localName in i){let n=i[o.localName];typeof n=="function"?yield n(o):yield*t(l(o,n))}}export{c as a,l as b};

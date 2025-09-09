@@ -1,0 +1,1 @@
+import{a as e}from"./chunk-KLXERNY4.js";function p(t){t?.writtenProperties&&t.writtenProperties.forEach(({target:i,propName:n,newOrigin:r})=>{e(i)&&r&&i.originOf(n)!==r&&i.updateOrigin(n,r)})}export{p as a};

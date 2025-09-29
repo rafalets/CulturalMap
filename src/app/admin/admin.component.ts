@@ -1,6 +1,5 @@
 // Import angular.
 import { Component } from '@angular/core';
-import { firstValueFrom } from 'rxjs';
 
 // Import material angular.
 import { MatToolbarModule } from '@angular/material/toolbar';

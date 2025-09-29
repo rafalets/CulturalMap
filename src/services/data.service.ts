@@ -8,11 +8,10 @@ import { Subject, BehaviorSubject } from 'rxjs';
 import { MatDialogRef } from '@angular/material/dialog';
 
 // Import Server.
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { FormAdminComponent } from '../app/admin/map-admin/form-admin/form-admin.component';
 import { EditEventsComponent } from '../app/admin/tabs-admin/events-admin/edit-events/edit-events.component';
 import { FormComponent } from '../app/home/map/form/form.component';
-import FeatureLayer from '@arcgis/core/layers/FeatureLayer';
 
 
 @Injectable({
@@ -43,10 +42,13 @@ export class DataService {
 
     // ADMIN ----- ADMIN ----- ADMIN ----- ADMIN ----- ADMIN \\
 
+    indexTabs: any = 0 // Το επιλεγμένο index στα Tabs.
+
     tableAddImagesEventsAdmin: any = []; // Ο πίνακας των εικόνων των εκδηλώσεων
     tableEditAddImagesEventsAdmin: any = []; // Ο πίνακας των εικόνων των εκδηλώσεων
     tableAddImagesPointsAdmin: any = []; // Ο πίνακας των εικόνων των εκκρεμότητων.
 
+    tableEditDeleteImagesEventsAdmin: any = []; // Ο πίνακας των εικόνων των εκδηλώσεων
 
     loadingSpinnerMapAdmin: Boolean = false; // Το spinner του Χάρτη στον Admin.
 
@@ -85,24 +87,29 @@ export class DataService {
                 objectIds.push(objectId) // Ενσωμάτωση στον πίνακα συλλογής.
             }
 
-            // Μαζική κλήση attachments (εικόνες).
-            const attachmentUrl = tableUrl[i].url.replace('/query', `/queryAttachments`); // Δημιουργία endpoint για attachments (εικόνες) (το url που είχα, αντί για query -> queryAttachments).
-            const attachmentParams = { f: 'json', returnUrl: true, objectIds: objectIds.join(',') }; // H μαζική κλήση των attachments (εικόνες) του κάθε Layer.
-            var attachmentRes: any = await firstValueFrom(this.http.get<any>(attachmentUrl, { params: attachmentParams })); // Η μαζική κλήση attachments (εικόνες). 
-            console.log(attachmentRes)
+            if (objectIds.length != 0) {
+                // Μαζική κλήση attachments (εικόνες).
+                const attachmentUrl = tableUrl[i].url.replace('/query', `/queryAttachments`); // Δημιουργία endpoint για attachments (εικόνες) (το url που είχα, αντί για query -> queryAttachments).
+                const attachmentParams = { f: 'json', returnUrl: true, objectIds: objectIds.join(',') }; // H μαζική κλήση των attachments (εικόνες) του κάθε Layer.
+                var attachmentRes: any = await firstValueFrom(this.http.get<any>(attachmentUrl, { params: attachmentParams })); // Η μαζική κλήση attachments (εικόνες). 
+                console.log(attachmentRes)
 
-            // Αντιστοίχιση της κάθε εικόνας στο αντίστοιχο feature με βάση το objectId.
-            for (let group of attachmentRes.attachmentGroups) {
-                for (let feature of res.features) {
-                    if (feature.attributes.OBJECTID == group.parentObjectId) {
-                        for (let imgInfo of group.attachmentInfos) {
-                            let objImages: any = {
-                                image: imgInfo.url,
-                                thumbImage: imgInfo.url, // Yποχρεωτικό το όνομα του πεδίου για να διαβάσει το Url.
-                                alt: imgInfo.name, // Yποχρεωτικό το όνομα του πεδίου για να διαβάσει το alt.
-                                title: imgInfo.name // Yποχρεωτικό το όνομα του πεδίου για να διαβάσει το title.
+                // Αντιστοίχιση της κάθε εικόνας στο αντίστοιχο feature με βάση το objectId.
+                for (let group of attachmentRes.attachmentGroups) {
+                    for (let feature of res.features) {
+                        if (feature.attributes.OBJECTID == group.parentObjectId) {
+                            for (let imgInfo of group.attachmentInfos) {
+                                console.log(imgInfo)
+                                let objImages: any = {
+                                    file: null,
+                                    attachmentId: imgInfo.id,
+                                    image: imgInfo.url,
+                                    thumbImage: imgInfo.url, // Yποχρεωτικό το όνομα του πεδίου για να διαβάσει το Url.
+                                    alt: imgInfo.name, // Yποχρεωτικό το όνομα του πεδίου για να διαβάσει το alt.
+                                    title: imgInfo.name // Yποχρεωτικό το όνομα του πεδίου για να διαβάσει το title.
+                                }
+                                feature.attachments.push(objImages)
                             }
-                            feature.attachments.push(objImages)
                         }
                     }
                 }

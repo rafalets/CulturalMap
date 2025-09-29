@@ -84,7 +84,7 @@
                     [imageSize]="imageSize" [manageImageRatio]="manageImageRatio" [autoSlide]="autoSlide"
                     [showArrow]="showArrow" [arrowKeyMove]="arrowKeyMove" [videoAutoPlay]="videoAutoPlay"
                     [showVideoControls]="showVideoControls" [direction]="direction" [lazyLoading]="lazyLoading"
-                    [defaultActiveImage]="defaultActiveImage">
+                    [defaultActiveImage]="defaultActiveImage" #nav>
                 </ng-image-slider>
                 }@else{
                 <div [ngClass]="{'errors-texts': insertImagesAddPointText == true}"
@@ -115,6 +115,7 @@
         <mat-tab-group animationDuration="0ms" style="height: 100%; width: 100%;"
             (selectedTabChange)="changeTabs($event)">
             <mat-tab label="Μονοήμερη εκδήλωση">
+                @if(indexTabs ==0){
                 <div class="informations-popup-container">
 
 
@@ -216,7 +217,7 @@
                             [imageSize]="imageSize" [manageImageRatio]="manageImageRatio" [autoSlide]="autoSlide"
                             [showArrow]="showArrow" [arrowKeyMove]="arrowKeyMove" [videoAutoPlay]="videoAutoPlay"
                             [showVideoControls]="showVideoControls" [direction]="direction" [lazyLoading]="lazyLoading"
-                            [defaultActiveImage]="defaultActiveImage">
+                            [defaultActiveImage]="defaultActiveImage" #navEvents>
                         </ng-image-slider>
                         }@else{
                         <div [ngClass]="{'errors-texts': insertImagesEventsText == true}"
@@ -241,10 +242,12 @@
                             multiple accept="image/png, image/gif, image/jpeg, image/jpg">
                     </div>
                 </div>
+                }
             </mat-tab>
 
 
             <mat-tab label="Πολυήμερη εκδήλωση">
+                @if(indexTabs ==1){
                 <div class="informations-popup-container">
                     <form class="form-informations-popup-container" [formGroup]="eventsControls">
                         <mat-form-field [appearance]="'outline'" style="width: 100%; margin-top: 10px;">
@@ -295,6 +298,8 @@
 
                     </form>
                 </div>
+
+
                 <div class="images-popup-container-events">
                     @if(DataService.tableAddImagesEventsAdmin.length != 0){
                     <div class="remove-image-div">
@@ -309,7 +314,7 @@
                             [imageSize]="imageSize" [manageImageRatio]="manageImageRatio" [autoSlide]="autoSlide"
                             [showArrow]="showArrow" [arrowKeyMove]="arrowKeyMove" [videoAutoPlay]="videoAutoPlay"
                             [showVideoControls]="showVideoControls" [direction]="direction" [lazyLoading]="lazyLoading"
-                            [defaultActiveImage]="defaultActiveImage">
+                            [defaultActiveImage]="defaultActiveImage" #navEvents>
                         </ng-image-slider>
                         }@else{
                         <div [ngClass]="{'errors-texts': insertImagesEventsText == true}"
@@ -334,6 +339,7 @@
                             multiple accept="image/png, image/gif, image/jpeg, image/jpg">
                     </div>
                 </div>
+                }
             </mat-tab>
         </mat-tab-group>
         }

@@ -9,7 +9,7 @@ export const routes: Routes = [
 
     { path: 'admin', component: AdminComponent },
     { path: 'home', component: HomeComponent },
-    { path: '', redirectTo: '/admin', pathMatch: 'full' },
+    { path: '', redirectTo: '/home', pathMatch: 'full' },
 
 
 

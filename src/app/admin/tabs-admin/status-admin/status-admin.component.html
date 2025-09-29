@@ -1,21 +1,23 @@
 <!-- <div style="height: calc(100% - 20px); width: calc(100% - 20px); margin: 10px;"> -->
 <div style="height:100%; width:100%">
 
-    @if(statusTable.length !=0){
+    @if(DataService.statusTable.length !=0){
     <div style="height: 100%; overflow-y: auto;">
-        @for(item of statusTable; track item){
+        @for(item of DataService.statusTable; track item){
         <div
             style="width: calc(100% - 10px); padding-left: 5px; padding-right: 5px; padding-top: 10px; padding-bottom: 10px; border-bottom: black solid 1px;">
+            @if(DataService.indexTabs ==1){
             @if(item.attachments.length != 0){
             <div style="height: 200px; width:100%">
-                <ng-image-slider *ngIf="showSlider" [images]="item.attachments" [infinite]="infinite" [imagePopup]="imagePopup"
-                    [animationSpeed]="animationSpeed" [slideImage]="slideImage" [imageSize]="imageSize"
-                    [manageImageRatio]="manageImageRatio" [autoSlide]="autoSlide" [showArrow]="showArrow"
-                    [arrowKeyMove]="arrowKeyMove" [videoAutoPlay]="videoAutoPlay"
+                <ng-image-slider *ngIf="showSlider" [images]="item.attachments" [infinite]="infinite"
+                    [imagePopup]="imagePopup" [animationSpeed]="animationSpeed" [slideImage]="slideImage"
+                    [imageSize]="imageSize" [manageImageRatio]="manageImageRatio" [autoSlide]="autoSlide"
+                    [showArrow]="showArrow" [arrowKeyMove]="arrowKeyMove" [videoAutoPlay]="videoAutoPlay"
                     [showVideoControls]="showVideoControls" [direction]="direction" [lazyLoading]="lazyLoading"
                     [defaultActiveImage]="defaultActiveImage">
                 </ng-image-slider>
             </div>
+            }
             }
             <div style="width:100%; margin-top: 3px;">
                 <b>Κατηγορία: </b>

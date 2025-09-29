@@ -61,6 +61,43 @@ export class EventsAdminComponent {
 
   ngOnInit() {
 
+    // this.DataService.dataServerAdmin$.subscribe(data => {
+    //   console.log(data)
+
+    //   for (let i in data) {
+    //     if (data[i].name == "Events") {
+
+    //       for (let j in data[i].data) {
+    //         // Προσαρμογή της ημερομηνίας date_from.
+    //         if (data[i].data[j].attributes.date_from != "" && data[i].data[j].attributes.date_from != null) {
+    //           let todayFrom = data[i].data[j].attributes.date_from
+    //           todayFrom = new Date(todayFrom)
+    //           let yearFrom = todayFrom.getFullYear();
+    //           let monthFrom = todayFrom.getMonth() + 1;
+    //           let dayFrom = todayFrom.getDate();
+    //           data[i].data[j].attributes.date_from = dayFrom + "/" + monthFrom + "/" + yearFrom;
+    //         }
+
+    //         // Προσαρμογή της ημερομηνίας date_to.
+    //         if (data[i].data[j].attributes.date_to != "" && data[i].data[j].attributes.date_to != null) {
+    //           let todayTo = data[i].data[j].attributes.date_to
+    //           todayTo = new Date(todayTo)
+    //           let yearTo = todayTo.getFullYear();
+    //           let monthTo = todayTo.getMonth() + 1;
+    //           let dayTo = todayTo.getDate();
+    //           data[i].data[j].attributes.date_to = dayTo + "/" + monthTo + "/" + yearTo;
+    //         }
+    //       }
+    //       this.tableEvents = [...data[i].data]
+    //     }
+    //   }
+    //   console.log(this.tableEvents)
+    // })
+
+  }
+
+  
+  ngAfterViewInit() {
     this.DataService.dataServerAdmin$.subscribe(data => {
       console.log(data)
 
@@ -95,6 +132,7 @@ export class EventsAdminComponent {
     })
 
   }
+
 
   addEvents() {
     this.DataService.newPointInMapFunction(); // Προσθήκη νέας εκδήλωσης.

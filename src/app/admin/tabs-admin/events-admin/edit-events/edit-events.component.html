@@ -19,6 +19,7 @@
         <mat-tab-group animationDuration="0ms" style="height: 100%; width: 100%;"
             (selectedTabChange)="changeTabs($event)" #tabsStep>
             <mat-tab label="Μονοήμερη εκδήλωση">
+                @if(indexTabs ==0){
                 <div class="informations-popup-container">
 
 
@@ -35,7 +36,7 @@
                             <mat-datepicker-toggle matIconSuffix [for]="picker"></mat-datepicker-toggle>
                             <mat-datepicker #picker></mat-datepicker>
                         </mat-form-field>
-<!-- 
+                        <!-- 
                         <mat-form-field [appearance]="'outline'" style="display: none;">
                             <mat-label>Ημερ. Εώς</mat-label>
                             <input matInput autocomplete="off" [matDatepicker]="pickerTo"
@@ -70,20 +71,20 @@
                     </form>
                 </div>
                 <div class="images-popup-container-events">
-                    @if(localImages.length != 0){
+                    @if(tableImagesEvents.length != 0){
                     <div class="remove-image-div">
                         <mat-icon class="remove-image-icon" mat-icon-button color="warn"
                             (click)="removeImagesEvents(sliderEvents.visiableImageIndex)">close</mat-icon>
                     </div>
                     }
                     <div style="height: 100%; width:100%">
-                        @if(localImages.length != 0){
-                        <ng-image-slider [images]="localImages" [infinite]="infinite" [imagePopup]="imagePopup"
+                        @if(tableImagesEvents.length != 0){
+                        <ng-image-slider [images]="tableImagesEvents" [infinite]="infinite" [imagePopup]="imagePopup"
                             [animationSpeed]="animationSpeed" [slideImage]="slideImage" [imageSize]="imageSize"
                             [manageImageRatio]="manageImageRatio" [autoSlide]="autoSlide" [showArrow]="showArrow"
                             [arrowKeyMove]="arrowKeyMove" [videoAutoPlay]="videoAutoPlay"
                             [showVideoControls]="showVideoControls" [direction]="direction" [lazyLoading]="lazyLoading"
-                            [defaultActiveImage]="defaultActiveImage">
+                            [defaultActiveImage]="defaultActiveImage" #navEvents>
                         </ng-image-slider>
                         }@else{
                         <div [ngClass]="{'errors-texts': insertImagesEventsText == true}"
@@ -92,10 +93,10 @@
                         </div>
                         }
                     </div>
-                    @if(localImages.length != 0){
+                    @if(tableImagesEvents.length != 0){
                     @if(sliderEvents){
                     <div>
-                        {{sliderEvents.visiableImageIndex + 1}} / {{localImages.length}}
+                        {{sliderEvents.visiableImageIndex + 1}} / {{tableImagesEvents.length}}
                     </div>
                     }
                     }
@@ -108,10 +109,12 @@
                             multiple accept="image/png, image/gif, image/jpeg, image/jpg">
                     </div>
                 </div>
+                }
             </mat-tab>
 
 
             <mat-tab label="Πολυήμερη εκδήλωση">
+                @if(indexTabs ==1){
                 <div class="informations-popup-container">
                     <form class="form-informations-popup-container" [formGroup]="eventsControls">
                         <mat-form-field [appearance]="'outline'" style="width: 100%; margin-top: 10px;">
@@ -163,20 +166,20 @@
                     </form>
                 </div>
                 <div class="images-popup-container-events">
-                    @if(localImages.length != 0){
+                    @if(tableImagesEvents.length != 0){
                     <div class="remove-image-div">
                         <mat-icon class="remove-image-icon" mat-icon-button color="warn"
                             (click)="removeImagesEvents(sliderEvents.visiableImageIndex)">close</mat-icon>
                     </div>
                     }
                     <div style="height: 100%; width:100%">
-                        @if(localImages.length != 0){
-                        <ng-image-slider [images]="localImages" [infinite]="infinite" [imagePopup]="imagePopup"
+                        @if(tableImagesEvents.length != 0){
+                        <ng-image-slider [images]="tableImagesEvents" [infinite]="infinite" [imagePopup]="imagePopup"
                             [animationSpeed]="animationSpeed" [slideImage]="slideImage" [imageSize]="imageSize"
                             [manageImageRatio]="manageImageRatio" [autoSlide]="autoSlide" [showArrow]="showArrow"
                             [arrowKeyMove]="arrowKeyMove" [videoAutoPlay]="videoAutoPlay"
                             [showVideoControls]="showVideoControls" [direction]="direction" [lazyLoading]="lazyLoading"
-                            [defaultActiveImage]="defaultActiveImage">
+                            [defaultActiveImage]="defaultActiveImage" #navEvents>
                         </ng-image-slider>
                         }@else{
                         <div [ngClass]="{'errors-texts': insertImagesEventsText == true}"
@@ -185,10 +188,10 @@
                         </div>
                         }
                     </div>
-                    @if(localImages.length != 0){
+                    @if(tableImagesEvents.length != 0){
                     @if(sliderEvents){
                     <div>
-                        {{sliderEvents.visiableImageIndex + 1}} / {{localImages.length}}
+                        {{sliderEvents.visiableImageIndex + 1}} / {{tableImagesEvents.length}}
                     </div>
                     }
                     }
@@ -201,6 +204,7 @@
                             multiple accept="image/png, image/gif, image/jpeg, image/jpg">
                     </div>
                 </div>
+                }
             </mat-tab>
         </mat-tab-group>
 
@@ -209,11 +213,11 @@
 
 </mat-dialog-content>
 <mat-dialog-actions align="end">
-    @if(editButtonEnabled){
+    <!-- @if(editButtonEnabled){ -->
     <button mat-stroked-button cdkFocusInitial class="primary-button cursor-button"
         (click)="addEvent()">Τροποποίηση</button>
-    }@else{
+    <!-- }@else{
     <button mat-stroked-button disabled>Τροποποίηση</button>
-    }
+    } -->
 
 </mat-dialog-actions>

@@ -76,8 +76,46 @@ export class UpdateEditComponent {
 
       const headers = new HttpHeaders({ 'Content-Type': 'application/x-www-form-urlencoded' });
 
-      let res = await firstValueFrom(this.http.post(url, updateBody.toString(), { headers }));
+      let res: any = await firstValueFrom(this.http.post(url, updateBody.toString(), { headers }));
       console.log(res)
+
+      // Προσθήκη εικόνας
+      const urlImagesAdd = `https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Εκδηλώσεις/FeatureServer/0/${res.updateResults[0].objectId}/addAttachment`;
+      for (let i in this.DataService.tableEditAddImagesEventsAdmin) {
+        if (this.DataService.tableEditAddImagesEventsAdmin[i].attachmentId == null) {
+
+          let file = this.DataService.tableEditAddImagesEventsAdmin[i].file
+          const formData = new FormData();
+          formData.append('attachment', file, file.name);
+          formData.append('f', 'json');
+          let resImages = await firstValueFrom(this.http.post(urlImagesAdd, formData)); // Κλήση προσθήκης attachment.
+          console.log(resImages)
+
+        }
+      }
+
+      // Αφαιρεση εικόνας
+      const urlImagesDelete = `https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Εκδηλώσεις/FeatureServer/0/${res.updateResults[0].objectId}/deleteAttachments`;
+      for (let i in this.DataService.tableEditDeleteImagesEventsAdmin) {
+        if (this.DataService.tableEditDeleteImagesEventsAdmin[i].attachmentId != null) {
+          console.log(this.DataService.tableEditDeleteImagesEventsAdmin[i])
+        
+          let attachmentId = this.DataService.tableEditDeleteImagesEventsAdmin[i].attachmentId
+          console.log(attachmentId)
+          const formData = new FormData();
+          formData.append('attachmentIds', attachmentId);
+          formData.append('f', 'json');
+          let resImages = await firstValueFrom(this.http.post(urlImagesDelete, formData)); // Κλήση προσθήκης attachment.
+          console.log(resImages)
+        }
+      }
+
+
+
+
+
+
+
 
       await this.DataService.insertDataServer(); // Ανανέωση βάσης.
 

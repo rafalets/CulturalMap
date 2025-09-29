@@ -1,7 +1,6 @@
 // Import angular.
 import { Component, ViewChild, inject } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { firstValueFrom } from 'rxjs';
 
 
 // Import material angular.
@@ -36,8 +35,7 @@ import { AcceptAddEventsComponent } from '../form-admin/accept-add-events/accept
 import { AcceptAddPointComponent } from '../form-admin/accept-add-point/accept-add-point.component';
 
 // Import Server.
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { HttpClientModule } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 
 @Component({
   selector: 'app-form-admin',
@@ -61,7 +59,6 @@ import { HttpClientModule } from '@angular/common/http';
 
     NgImageSliderModule,
 
-    HttpClientModule,
   ],
   providers: [HttpClient, provideNativeDateAdapter()],
   templateUrl: './form-admin.component.html',
@@ -94,7 +91,7 @@ export class FormAdminComponent {
   idImagesEvents: number = 0; // Το Id των εικόνων.
   // ViewChild:
   @ViewChild('navEvents') sliderEvents!: NgImageSliderComponent; // Χρησιμοποιείται για την επίλυση του bug στο slider (τι να φαίνεται όταν προσθέτω και όταν αφαιρώ μια εικόνα).
-  
+
 
   // Τα controls των events (Controls).
   eventsControls!: FormGroup;
@@ -146,6 +143,8 @@ export class FormAdminComponent {
   insertImagesAddPointText = false; // Επισήμανση του *Εισαγωγή εικόνων στο uploadImages
 
   ngOnInit(): void {
+
+
     // Δημιουργούμε το FormGroup μαζί με όλα τα child controls (Controls).
     this.eventsControls = this.fb.group({
       titleControlEvents: ['', Validators.required],
@@ -203,7 +202,7 @@ export class FormAdminComponent {
   }
 
 
-  
+
 
 
   /** 4. Βοηθητικά getters για εύκολη πρόσβαση σε μεμονωμένα πεδία */
@@ -515,11 +514,14 @@ export class FormAdminComponent {
   }
 
   changeTabs(event: any) {
+    // var table = [...this.DataService.tableAddImagesEventsAdmin]
 
     this.indexTabs = event.index // Το επιλεγμένο index στα Tabs.
 
     this.updateValuesFormEvents();
-
+    // this.DataService.tableAddImagesEventsAdmin = [];
+    // this.DataService.tableAddImagesEventsAdmin = table
+    // this.slider.visiableImageIndex = this.slider.visiableImageIndex
   }
 
   openDialogAcceptEvents() {

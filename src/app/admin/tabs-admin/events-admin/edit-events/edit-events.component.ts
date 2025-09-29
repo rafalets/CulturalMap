@@ -111,11 +111,11 @@ export class EditEventsComponent {
   insertImagesEventsText = false; // Επισήμανση του *Εισαγωγή εικόνων στο uploadImagesEvents
 
   eventsControlsHelp: any; // Αποθηκεύει τα αρχικά δεδομένα ώστε να γίνεται σύγκριση με τα νέα.
-  editButtonEnabled: boolean = false; // Αν υπάρχει αλλαγή στα δεδομένα, το button τροποποίηση γίνεται Enable.
+  // editButtonEnabled: boolean = false; // Αν υπάρχει αλλαγή στα δεδομένα, το button τροποποίηση γίνεται Enable.
 
   @ViewChild('tabsStep', { static: false }) tabsStep!: MatTabGroup;
 
-  localImages: any = [];
+  comparableImagesEvents: any = [];
 
   ngOnInit(): void {
 
@@ -174,6 +174,7 @@ export class EditEventsComponent {
               }
 
               for (let attachments of data[i].data[j].attachments) {
+                console.log(attachments)
                 this.DataService.tableEditAddImagesEventsAdmin.push(attachments)
               }
 
@@ -187,11 +188,13 @@ export class EditEventsComponent {
     // Αποθηκεύεις το αρχικό value (για να γίνεται σύγκριση)
     this.eventsControlsHelp = this.eventsControls.getRawValue();
 
-    // Κάνεις subscribe για αλλαγές (σύγκριση τυχών αλλαγών)
-    this.eventsControls.valueChanges.subscribe(currentValue => {
-      const hasChanged = JSON.stringify(currentValue) !== JSON.stringify(this.eventsControlsHelp);
-      this.editButtonEnabled = hasChanged && this.eventsControls.valid;
-    });
+    // // Κάνεις subscribe για αλλαγές (σύγκριση τυχών αλλαγών)
+    // this.eventsControls.valueChanges.subscribe(currentValue => {
+    //   const hasChanged = JSON.stringify(currentValue) !== JSON.stringify(this.eventsControlsHelp);
+    //   // this.editButtonEnabled = hasChanged && this.eventsControls.valid;
+    //   this.editButtonEnabled = hasChanged;
+
+    // });
 
 
 
@@ -206,17 +209,35 @@ export class EditEventsComponent {
       this.tabsStep.selectedIndex = 1;
     }
 
-    this.localImages = [...this.DataService.tableEditAddImagesEventsAdmin];
-
+    this.comparableImagesEvents = [...this.DataService.tableEditAddImagesEventsAdmin];
+    this.tableImagesEvents = [...this.DataService.tableEditAddImagesEventsAdmin];
+    console.log(this.comparableImagesEvents)
   }
 
-  changeTabs(event: any) {
+  async changeTabs(event: any) {
     this.indexTabs = event.index // Το επιλεγμένο index στα Tabs.
-    this.updateValuesFormEvents();
-    this.localImages = [...this.DataService.tableEditAddImagesEventsAdmin];
+
+    // Το ημερομηνία εώς να είναι πάντα υποχρεωτικό στο tab -> 1
+    if (event.index == 1) {
+      this.eventsControls.get("dateToControlEvents")
+        ?.setValidators([Validators.required]);
+    } else {
+      this.eventsControls.get("dateToControlEvents")
+        ?.clearValidators();
+    }
+
+
+    await this.updateValuesFormEvents();
+    // this.localImages = [...this.DataService.tableEditAddImagesEventsAdmin];
+    // this.tableImagesEvents = [...this.DataService.tableEditAddImagesEventsAdmin];
+
+    console.log(event.index)
+
+
+
   }
 
-  updateValuesFormEvents() {
+  async updateValuesFormEvents() {
 
     let valueTitle: any = this.eventsControls.controls["titleControlEvents"].value;
     this.eventsControls.get("titleControlEvents")?.setValue(valueTitle);
@@ -271,6 +292,8 @@ export class EditEventsComponent {
       reader.readAsDataURL(file);
       reader.onload = () => {
         this.tableImagesEvents.push({
+          file: file,
+          attachmentId: null,
           title: file.name,
           alt: file.name,
           thumbImage: reader.result,
@@ -279,6 +302,11 @@ export class EditEventsComponent {
         this.idImagesEvents++;
 
         // Να δείχνει πάντα την τελευταία εικόνα
+        console.log(this.sliderEvents)
+
+        console.log(this.sliderEvents.visiableImageIndex)
+        console.log(this.tableImagesEvents.length - 1)
+
         if (this.sliderEvents) {
           this.sliderEvents.visiableImageIndex = this.tableImagesEvents.length - 1;
         }
@@ -288,12 +316,20 @@ export class EditEventsComponent {
     // Επαναφορά τιμής, ώστε να ξαναδιαλέξουμε τα ίδια αρχεία αν θέλουμε
     input.value = '';
 
+    console.log(this.tableImagesEvents);
 
   }
 
   removeImagesEvents(idImage: any) {
-    // Διαγραφή εικόνας.
+    // Βρες το αντικείμενο που θα αφαιρεθεί
+    const deletedItem = this.tableImagesEvents.find((item: any) => item.index === idImage);
+    // Αν υπάρχει, πρόσθεσέ το στον άλλο πίνακα
+    if (deletedItem) {
+      this.DataService.tableEditDeleteImagesEventsAdmin.push(deletedItem);
+    }
+    // Διαγραφή εικόνας από τον κύριο πίνακα
     this.tableImagesEvents = this.tableImagesEvents.filter((item: any) => item.index !== idImage);
+
 
     // Αν η εικόνα που φαίνεται στο slider, είναι πίο μπροστά σε θέση από την εικόνα που θα επιλεχθεί να αφαιρεθεί (Λύση bug).
     if (this.sliderEvents.visiableImageIndex > idImage) {
@@ -301,13 +337,15 @@ export class EditEventsComponent {
       this.sliderEvents.visiableImageIndex = this.sliderEvents.visiableImageIndex - 1;
       // this.sliderEvents.prev();
     }
-
     // Αν η εικόνα που φαίνεται στο sliderEvents, είναι η τελευταία εικόνα σε θέση και επιλεχθεί να αφαιρεθεί αυτή (Λύση bug).
     if (this.sliderEvents.visiableImageIndex == this.tableImagesEvents.length) {
       // Να δείξει την προηγούμενη.
       this.sliderEvents.visiableImageIndex = this.sliderEvents.visiableImageIndex - 1;
       // this.sliderEvents.prev();
     }
+
+
+
 
   }
 
@@ -330,7 +368,11 @@ export class EditEventsComponent {
     this.DataService.serviceJsonValuesEventsUpdate = this.jsonValuesEvents;
 
 
+    this.DataService.tableEditAddImagesEventsAdmin = [...this.tableImagesEvents];
     this.insertImagesEventsText = true; // Επισήμανση του *Εισαγωγή εικόνων στο uploadImagesEvents
+    console.log(this.DataService.tableEditAddImagesEventsAdmin)
+    console.log(this.DataService.tableEditDeleteImagesEventsAdmin)
+
 
     // Δείχνει τα require πεδία (μαζικά, όχι ένα ενα).
     if (!this.eventsControls.valid || this.tableImagesEvents.length == 0) { // Αν υπάρχουν errors.
@@ -349,6 +391,11 @@ export class EditEventsComponent {
     } else {
       this.openDialogUpdateEvents();
     }
+
+
+
+
+
   }
 
 

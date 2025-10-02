@@ -55,13 +55,21 @@ export class PopupAcceptCanselComponent {
       // Επιλογή url.
       var layerList: any = [
         {
-          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/ArcGIS/rest/services/POLITISTIKA/FeatureServer/0/applyEdits",
-          name: "Εκκλησία"
+          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Churchs_Monasteries/FeatureServer/0/applyEdits",
+          name: "Εκκλησία/Μοναστήρι",
         },
         {
-          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/ArcGIS/rest/services/POLITISTIKA/FeatureServer/1/applyEdits",
-          name: "Μουσείο"
-        }
+          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Museums/FeatureServer/0/applyEdits",
+          name: "Μουσείο",
+        },
+        {
+          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Historical_Monuments/FeatureServer/0/applyEdits",
+          name: "Ιστορικό μνημείο",
+        },
+        {
+          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Cultural_Clubs/FeatureServer/0/applyEdits",
+          name: "Πολιτιστικός σύλλογος",
+        },
       ]
       var url = '';
       for (let i in layerList) {
@@ -117,13 +125,21 @@ export class PopupAcceptCanselComponent {
       // Επιλογή url.
       var layerList: any = [
         {
-          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/ArcGIS/rest/services/POLITISTIKA/FeatureServer/0/applyEdits",
-          name: "Εκκλησία"
+          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Churchs_Monasteries/FeatureServer/0/applyEdits",
+          name: "Εκκλησία/Μοναστήρι",
         },
         {
-          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/ArcGIS/rest/services/POLITISTIKA/FeatureServer/1/applyEdits",
-          name: "Μουσείο"
-        }
+          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Museums/FeatureServer/0/applyEdits",
+          name: "Μουσείο",
+        },
+        {
+          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Historical_Monuments/FeatureServer/0/applyEdits",
+          name: "Ιστορικό μνημείο",
+        },
+        {
+          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Cultural_Clubs/FeatureServer/0/applyEdits",
+          name: "Πολιτιστικός σύλλογος",
+        },
       ]
       var url = '';
       for (let i in layerList) {

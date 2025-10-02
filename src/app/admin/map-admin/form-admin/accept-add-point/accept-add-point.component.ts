@@ -52,14 +52,24 @@ export class AcceptAddPointComponent {
       // Βήμα 1.1 - Προσθήκη Atributes & Geometry.
       var layerList: any = [
         {
-          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/ArcGIS/rest/services/POLITISTIKA/FeatureServer/0/addFeatures",
-          name: "Εκκλησία",
-          helpUrlImages: "https://services6.arcgis.com/f36cxNuTmfCJN313/ArcGIS/rest/services/POLITISTIKA/FeatureServer/0/",
+          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Churchs_Monasteries/FeatureServer/0/addFeatures",
+          name: "Εκκλησία/Μοναστήρι",
+          helpUrlImages: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Churchs_Monasteries/FeatureServer/0/",
         },
         {
-          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/ArcGIS/rest/services/POLITISTIKA/FeatureServer/1/addFeatures",
+          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Museums/FeatureServer/0/addFeatures",
           name: "Μουσείο",
-          helpUrlImages: "https://services6.arcgis.com/f36cxNuTmfCJN313/ArcGIS/rest/services/POLITISTIKA/FeatureServer/1/",
+          helpUrlImages: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Museums/FeatureServer/0/",
+        },
+        {
+          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Historical_Monuments/FeatureServer/0/addFeatures",
+          name: "Ιστορικό μνημείο",
+          helpUrlImages: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Historical_Monuments/FeatureServer/0/",
+        },
+        {
+          url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Cultural_Clubs/FeatureServer/0/addFeatures",
+          name: "Πολιτιστικός σύλλογος",
+          helpUrlImages: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Cultural_Clubs/FeatureServer/0/",
         }
       ]
       var url = '';

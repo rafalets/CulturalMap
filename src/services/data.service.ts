@@ -60,8 +60,10 @@ export class DataService {
         // Το url query του κάθε Layer
         var tableUrl = [
             { url: 'https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Εκδηλώσεις/FeatureServer/0/query', name: "Events" },
-            { url: 'https://services6.arcgis.com/f36cxNuTmfCJN313/ArcGIS/rest/services/POLITISTIKA/FeatureServer/0/query', name: "Church" },
-            { url: 'https://services6.arcgis.com/f36cxNuTmfCJN313/ArcGIS/rest/services/POLITISTIKA/FeatureServer/1/query', name: "Museum" },
+            { url: 'https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Churchs_Monasteries/FeatureServer/0/query', name: "Churchs_Monasteries" },
+            { url: 'https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Museums/FeatureServer/0/query', name: "Museums" },
+            { url: 'https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Historical_Monuments/FeatureServer/0/query', name: "Historical_Monuments" },
+            { url: 'https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Cultural_Clubs/FeatureServer/0/query', name: "Cultural_Clubs" },
         ]
 
         // Οι παράμετροι.
@@ -76,8 +78,10 @@ export class DataService {
         var data = []
         // Η συλλογή όλων των δεδομένων.
         for (let i in tableUrl) {
+
             let res = await firstValueFrom(this.http.get<any>(tableUrl[i].url, { params })) // Η κλήση για κάθε feature από το κάθε Layer.
             console.log(res)
+            console.log(res.features)
 
             // Συλλογή των objectIds από τα features που έχουν attachments (εικόνες) έτσι ώστε να γίνει μαζική κλήση (μία κλήση) για να επιστρέψουν οι εικόνες του κάθε feature.
             let objectIds = []; // Συλλογή objectIds.
@@ -92,14 +96,12 @@ export class DataService {
                 const attachmentUrl = tableUrl[i].url.replace('/query', `/queryAttachments`); // Δημιουργία endpoint για attachments (εικόνες) (το url που είχα, αντί για query -> queryAttachments).
                 const attachmentParams = { f: 'json', returnUrl: true, objectIds: objectIds.join(',') }; // H μαζική κλήση των attachments (εικόνες) του κάθε Layer.
                 var attachmentRes: any = await firstValueFrom(this.http.get<any>(attachmentUrl, { params: attachmentParams })); // Η μαζική κλήση attachments (εικόνες). 
-                console.log(attachmentRes)
 
                 // Αντιστοίχιση της κάθε εικόνας στο αντίστοιχο feature με βάση το objectId.
                 for (let group of attachmentRes.attachmentGroups) {
                     for (let feature of res.features) {
                         if (feature.attributes.OBJECTID == group.parentObjectId) {
                             for (let imgInfo of group.attachmentInfos) {
-                                console.log(imgInfo)
                                 let objImages: any = {
                                     file: null,
                                     attachmentId: imgInfo.id,
@@ -122,7 +124,6 @@ export class DataService {
             });
         }
         this.dataServerAdmin.next(data); // Observable
-        console.log(this.dataServerAdmin)
     }
 
     objectidDeleteEvent: any; // Το objectId του event που θα διαγραφεί.

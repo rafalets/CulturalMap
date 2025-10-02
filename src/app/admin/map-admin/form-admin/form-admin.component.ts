@@ -22,7 +22,7 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, FormGroup, Validators } 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabsModule } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
+import { provideNativeDateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 
 
@@ -60,7 +60,7 @@ import { HttpClient } from '@angular/common/http';
     NgImageSliderModule,
 
   ],
-  providers: [HttpClient, provideNativeDateAdapter()],
+  providers: [HttpClient, provideNativeDateAdapter(), { provide: MAT_DATE_LOCALE, useValue: 'en-GB' }],
   templateUrl: './form-admin.component.html',
   styleUrl: './form-admin.component.scss'
 })
@@ -76,8 +76,10 @@ export class FormAdminComponent {
 
 
   categoriesTable: any = [ // Ο πίνακας των κατηγοριών.
-    { name: 'Εκκλησία', code: "Εκκλησία", category: "Όνομα εκκλησίας" },
+    { name: 'Εκκλησία/Μοναστήρι', code: "Εκκλησία/Μοναστήρι", category: "Όνομα εκκλησίας/μοναστηριού" },
     { name: 'Μουσείο', code: "Μουσείο", category: "Όνομα μουσείου" },
+    { name: 'Πολιτιστικός σύλλογος', code: "Πολιτιστικός σύλλογος", category: "Όνομα πολιτιστικού συλλόγου" },
+    { name: 'Ιστορικό μνημείο', code: "Ιστορικό μνημείο", category: "Όνομα ιστορικού μνημείου" },
   ]
   selectedCategory: any; // Το value της επιλεγμένης κατηγορίας (π.χ. value = church -> Εκκλησία).
   disaledButtons = true;

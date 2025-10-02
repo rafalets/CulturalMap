@@ -109,16 +109,28 @@ export class MapComponent {
     // Η λίστα με τα Layers.
     var layerList: any = [
       {
-        url: "https://services6.arcgis.com/f36cxNuTmfCJN313/ArcGIS/rest/services/POLITISTIKA/FeatureServer/0",
-        name: "Churches",
-        id: "ba37ca1414cc4647958b8b5829a9289a",
+        url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Churchs_Monasteries/FeatureServer/0",
+        name: "Churchs_Monasteries",
+        id: "6cf54543860642c5ab711660d3b0cb3c",
         indexId: 0,
       },
       {
-        url: "https://services6.arcgis.com/f36cxNuTmfCJN313/ArcGIS/rest/services/POLITISTIKA/FeatureServer/1",
+        url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Museums/FeatureServer/0",
         name: "Museums",
-        id: "ba37ca1414cc4647958b8b5829a9289a",
-        indexId: 1,
+        id: "8eaf1bf24ac94370ac3cdda453e4c7e8",
+        indexId: 0,
+      },
+      {
+        url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Historical_Monuments/FeatureServer/0",
+        name: "Historical_Monuments",
+        id: "a9ed22d9a772470d8c82f1e1bf81d4e6",
+        indexId: 0,
+      },
+      {
+        url: "https://services6.arcgis.com/f36cxNuTmfCJN313/arcgis/rest/services/Cultural_Clubs/FeatureServer/0",
+        name: "Cultural_Clubs",
+        id: "eb9143e0fe0c4ca49f7ba94be1d04b84",
+        indexId: 0,
       }
     ]
     console.log(layerList)

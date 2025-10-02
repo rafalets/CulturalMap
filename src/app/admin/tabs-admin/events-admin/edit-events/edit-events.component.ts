@@ -21,8 +21,8 @@ import { FormBuilder, FormsModule, ReactiveFormsModule, FormGroup, Validators } 
 import { MatSnackBar } from '@angular/material/snack-bar';
 import { MatTabsModule, MatTabGroup } from '@angular/material/tabs';
 import { MatDatepickerModule } from '@angular/material/datepicker';
-import { provideNativeDateAdapter } from '@angular/material/core';
-import { MatNativeDateModule, MAT_DATE_LOCALE } from '@angular/material/core';
+import { provideNativeDateAdapter, MAT_DATE_LOCALE } from '@angular/material/core';
+import { MatNativeDateModule } from '@angular/material/core';
 import { MatDialog } from '@angular/material/dialog';
 
 

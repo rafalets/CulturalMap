@@ -126,7 +126,7 @@ export class EventsComponent {
   defaultActiveImage = 0
 
 
-  ngOnInit() {
+  ngAfterViewInit() {
     this.DataService.dataServerAdmin$.subscribe(data => {
       const startOfToday = new Date();
       startOfToday.setHours(0, 0, 0, 0);

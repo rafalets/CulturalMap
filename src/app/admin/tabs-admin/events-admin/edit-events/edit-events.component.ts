@@ -117,89 +117,128 @@ export class EditEventsComponent {
 
   comparableImagesEvents: any = [];
 
-  ngOnInit(): void {
-
-    this.DataService.tableEditAddImagesEventsAdmin = []
-
-    this.DataService.dataServerAdmin$.subscribe(data => {
-      console.log(data)
-
-      for (let i in data) {
-        if (data[i].name == "Events") {
-          for (let j in data[i].data) {
-            if (data[i].data[j].attributes.OBJECTID == this.DataService.editObjectId) {
-
-              // Τροποποίηση και προσαρμογή ημερομηνίας Από.
-              const inputDateFrom = data[i].data[j].attributes.date_from;
-              var dateFrom: any;
-              if (inputDateFrom != null) {
-                const [dayFrom, monthFrom, yearFrom] = inputDateFrom.split('/').map(Number);
-                dateFrom = new Date(yearFrom, monthFrom - 1, dayFrom);
-              } else {
-                dateFrom = "";
-              }
-
-              // Τροποποίηση και προσαρμογή ημερομηνίας Εώς.
-              const inputDateTo = data[i].data[j].attributes.date_to;
-              console.log(inputDateTo)
-              var dateTo: any;
-              if (inputDateTo != null) {
-                const [dayTo, monthTo, yearTo] = inputDateTo.split('/').map(Number);
-                dateTo = new Date(yearTo, monthTo - 1, dayTo);
-              } else {
-                dateTo = "";
-              }
-
-              // Δημιουργούμε το FormGroup μαζί με όλα τα child controls (Controls).
-              if (dateTo != "") {
-                this.eventsControls = this.addEvents.group({
-                  titleControlEvents: [data[i].data[j].attributes.title, Validators.required],
-                  dateFromControlEvents: [dateFrom, Validators.required],
-                  dateToControlEvents: [dateTo, Validators.required],
-                  latControlEvents: [data[i].data[j].geometry.y.toFixed(5) ?? null, Validators.required],
-                  longControlEvents: [data[i].data[j].geometry.x.toFixed(5) ?? null, Validators.required],
-                  descriptionControlEvents: [data[i].data[j].attributes.description],
-                  linkControlEvents: [data[i].data[j].attributes.link]
-                });
-              } else {
-                this.eventsControls = this.addEvents.group({
-                  titleControlEvents: [data[i].data[j].attributes.title, Validators.required],
-                  dateFromControlEvents: [dateFrom, Validators.required],
-                  dateToControlEvents: [dateTo],
-                  latControlEvents: [data[i].data[j].geometry.y.toFixed(5) ?? null, Validators.required],
-                  longControlEvents: [data[i].data[j].geometry.x.toFixed(5) ?? null, Validators.required],
-                  descriptionControlEvents: [data[i].data[j].attributes.description],
-                  linkControlEvents: [data[i].data[j].attributes.link]
-                });
-              }
-
-              for (let attachments of data[i].data[j].attachments) {
-                console.log(attachments)
-                this.DataService.tableEditAddImagesEventsAdmin.push(attachments)
-              }
 
 
+
+
+
+
+// Μικρός helper που δέχεται είτε timestamp (ms/sec) είτε "dd/MM/yyyy" είτε ISO string
+private toDate(val: any): Date | null {
+  if (val === null || val === undefined || val === '') return null;
+
+  if (typeof val === 'number') {
+    const ms = val > 10_000_000_000 ? val : val * 1000; // sec -> ms αν χρειαστεί
+    const d = new Date(ms);
+    return isNaN(d.getTime()) ? null : d;
+  }
+
+  if (typeof val === 'string') {
+    if (val.includes('/')) {
+      const [dStr, mStr, yStr] = val.split('/');
+      const d = Number(dStr);
+      const m = Number(mStr);
+      const y = Number(yStr);
+      const parsed = new Date(y, m - 1, d);
+      return isNaN(parsed.getTime()) ? null : parsed;
+    }
+    const parsed = new Date(val); // ISO ή άλλο format
+    return isNaN(parsed.getTime()) ? null : parsed;
+  }
+
+  return null;
+}
+
+
+
+
+
+
+
+ngOnInit(): void {
+  // Αρχικοποίηση κενής φόρμας (για ασφάλεια πριν έρθουν τα data)
+  this.eventsControls = this.addEvents.group({
+    titleControlEvents: [null, Validators.required],
+    dateFromControlEvents: [null, Validators.required],
+    dateToControlEvents: [null],
+    latControlEvents: [null, Validators.required],
+    longControlEvents: [null, Validators.required],
+    descriptionControlEvents: [null],
+    linkControlEvents: [null],
+  });
+
+  // καθάρισμα πίνακα εικόνων
+  this.DataService.tableEditAddImagesEventsAdmin = [];
+
+  this.DataService.dataServerAdmin$.subscribe(data => {
+    // console.log(data)
+
+    for (let i in data) {
+      if (data[i].name === 'Events') {
+        for (let j in data[i].data) {
+          if (data[i].data[j].attributes.OBJECTID === this.DataService.editObjectId) {
+
+            // --- Ημερομηνίες (δέχεται timestamp ή "dd/MM/yyyy") ---
+            const inputDateFrom = data[i].data[j].attributes.date_from;
+            const dateFrom = this.toDate(inputDateFrom);
+
+            const inputDateTo = data[i].data[j].attributes.date_to;
+            const dateTo = this.toDate(inputDateTo);
+
+            // --- Συντεταγμένες με ασφάλεια ---
+            const lat = data[i].data[j].geometry?.y != null
+              ? Number(data[i].data[j].geometry.y).toFixed(5)
+              : null;
+            const lng = data[i].data[j].geometry?.x != null
+              ? Number(data[i].data[j].geometry.x).toFixed(5)
+              : null;
+
+            // --- Δημιουργία/Ενημέρωση FormGroup ---
+            if (dateTo) {
+              this.eventsControls = this.addEvents.group({
+                titleControlEvents: [data[i].data[j].attributes.title, Validators.required],
+                dateFromControlEvents: [dateFrom, Validators.required],
+                dateToControlEvents: [dateTo, Validators.required],
+                latControlEvents: [lat, Validators.required],
+                longControlEvents: [lng, Validators.required],
+                descriptionControlEvents: [data[i].data[j].attributes.description],
+                linkControlEvents: [data[i].data[j].attributes.link]
+              });
+            } else {
+              this.eventsControls = this.addEvents.group({
+                titleControlEvents: [data[i].data[j].attributes.title, Validators.required],
+                dateFromControlEvents: [dateFrom, Validators.required],
+                dateToControlEvents: [null], // καλύτερα null αντί για ""
+                latControlEvents: [lat, Validators.required],
+                longControlEvents: [lng, Validators.required],
+                descriptionControlEvents: [data[i].data[j].attributes.description],
+                linkControlEvents: [data[i].data[j].attributes.link]
+              });
             }
+
+            // --- Συνημμένα ---
+            for (let attachments of data[i].data[j].attachments ?? []) {
+              // console.log(attachments)
+              this.DataService.tableEditAddImagesEventsAdmin.push(attachments);
+            }
+
+            // Αποθήκευση αρχικού value για σύγκριση αλλαγών
+            this.eventsControlsHelp = this.eventsControls.getRawValue();
+
+            // (προαιρετικά) ενεργοποίηση κουμπιού όταν αλλάζει κάτι
+            // this.eventsControls.valueChanges.subscribe(currentValue => {
+            //   const hasChanged = JSON.stringify(currentValue) !== JSON.stringify(this.eventsControlsHelp);
+            //   this.editButtonEnabled = hasChanged; // && this.eventsControls.valid;
+            // });
+
+            // Βρήκαμε το αντικείμενο—μπορούμε να βγούμε από τα loops
+            return;
           }
         }
       }
-    })
-
-    // Αποθηκεύεις το αρχικό value (για να γίνεται σύγκριση)
-    this.eventsControlsHelp = this.eventsControls.getRawValue();
-
-    // // Κάνεις subscribe για αλλαγές (σύγκριση τυχών αλλαγών)
-    // this.eventsControls.valueChanges.subscribe(currentValue => {
-    //   const hasChanged = JSON.stringify(currentValue) !== JSON.stringify(this.eventsControlsHelp);
-    //   // this.editButtonEnabled = hasChanged && this.eventsControls.valid;
-    //   this.editButtonEnabled = hasChanged;
-
-    // });
-
-
-
-
-  }
+    }
+  });
+}
 
 
   async ngAfterViewInit() {

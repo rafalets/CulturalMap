@@ -115,12 +115,26 @@
     }
 
     .container-left {
-        height: 65%;
+        height: 50%;
         width: 100%;
     }
 
     .container-right {
-        height: 35%;
+        height: 50%;
+        width: 100%;
+    }
+
+    .container-spinner-disabled {
+        z-index: 10;
+        background-color: rgba($color: #ffffff, $alpha: 0.5);
+        position: fixed;
+        top: calc(50% + 10px);
+        bottom: 0;
+        left: 0;
+        right: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
         width: 100%;
     }
 

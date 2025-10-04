@@ -90,7 +90,7 @@ export class PopupAcceptCanselComponent {
 
       this._snackBar.open( // Μύνημα Επιτυχίας.
         'Επιτυχία ακύρωσης',
-        'Close',
+        'Κλείσιμο',
         {
           duration: 3000,
           horizontalPosition: 'center',
@@ -101,7 +101,7 @@ export class PopupAcceptCanselComponent {
     } catch {
       this._snackBar.open( // Μύνημα Αποτυχίας.
         'Αποτυχία ακύρωσης',
-        'Close',
+        'Κλείσιμο',
         {
           duration: 3000,
           horizontalPosition: 'center',
@@ -186,7 +186,7 @@ export class PopupAcceptCanselComponent {
 
       this._snackBar.open( // Μύνημα Επιτυχίας.
         'Επιτυχία αποδοχής',
-        'Close',
+        'Κλείσιμο',
         {
           duration: 3000,
           horizontalPosition: 'center',
@@ -197,7 +197,7 @@ export class PopupAcceptCanselComponent {
     } catch {
       this._snackBar.open( // Μύνημα Αποτυχίας.
         'Αποτυχία αποδοχής',
-        'Close',
+        'Κλείσιμο',
         {
           duration: 3000,
           horizontalPosition: 'center',

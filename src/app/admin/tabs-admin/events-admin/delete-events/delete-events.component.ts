@@ -66,7 +66,7 @@ export class DeleteEventsComponent {
 
       this._snackBar.open( // Μύνημα Επιτυχίας.
         'Επιτυχία ακύρωσης',
-        'Close',
+        'Κλείσιμο',
         {
           duration: 3000,
           horizontalPosition: 'center',
@@ -77,7 +77,7 @@ export class DeleteEventsComponent {
     } catch {
       this._snackBar.open( // Μύνημα Αποτυχίας.
         'Αποτυχία ακύρωσης',
-        'Close',
+        'Κλείσιμο',
         {
           duration: 3000,
           horizontalPosition: 'center',

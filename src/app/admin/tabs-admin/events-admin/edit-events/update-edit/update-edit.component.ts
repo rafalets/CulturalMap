@@ -121,7 +121,7 @@ export class UpdateEditComponent {
 
       this._snackBar.open( // Μύνημα Επιτυχίας.
         'Επιτυχία τροποποίησης',
-        'Close',
+        'Κλείσιμο',
         {
           duration: 3000,
           horizontalPosition: 'center',
@@ -132,7 +132,7 @@ export class UpdateEditComponent {
     } catch {
       this._snackBar.open( // Μύνημα Αποτυχίας.
         'Αποτυχία τροποποίησης',
-        'Close',
+        'Κλείσιμο',
         {
           duration: 3000,
           horizontalPosition: 'center',

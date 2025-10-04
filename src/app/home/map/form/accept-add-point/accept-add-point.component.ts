@@ -125,7 +125,7 @@ export class AcceptAddPointComponent {
       // Βήμα 1.4 - Μύνημα Επιτυχίας.
       this._snackBar.open(
         'Επιτυχία υποβολής',
-        'Close',
+        'Κλείσιμο',
         {
           duration: 3000,
           horizontalPosition: 'center',
@@ -137,7 +137,7 @@ export class AcceptAddPointComponent {
       // Βήμα 2.1 - Μύνημα Αποτυχίας.
       this._snackBar.open(
         'Αποτυχία υποβολής',
-        'Close',
+        'Κλείσιμο',
         {
           duration: 3000,
           horizontalPosition: 'center',

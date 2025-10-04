@@ -78,7 +78,7 @@ export class DataService {
         var data = []
         // Η συλλογή όλων των δεδομένων.
         for (let i in tableUrl) {
-
+            console.log(tableUrl[i])
             let res = await firstValueFrom(this.http.get<any>(tableUrl[i].url, { params })) // Η κλήση για κάθε feature από το κάθε Layer.
             console.log(res)
             console.log(res.features)
@@ -124,6 +124,7 @@ export class DataService {
             });
         }
         this.dataServerAdmin.next(data); // Observable
+        console.log(this.dataServerAdmin)
     }
 
     objectidDeleteEvent: any; // Το objectId του event που θα διαγραφεί.

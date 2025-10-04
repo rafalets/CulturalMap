@@ -238,8 +238,8 @@ export class FormAdminComponent {
       // Έλεγχος τύπου
       if (allowedTypes.indexOf(file.type) === -1) {
         this._snackBar.open(
-          'Allowed: .jpeg, .jpg, .png, .gif',
-          'Close',
+          'Επιτρέπονται: .jpeg, .jpg, .png, .gif',
+          'Κλείσιμο',
           {
             duration: 3000,
             horizontalPosition: 'center',
@@ -311,8 +311,8 @@ export class FormAdminComponent {
       // Έλεγχος τύπου
       if (allowedTypes.indexOf(file.type) === -1) {
         this._snackBar.open(
-          'Allowed: .jpeg, .jpg, .png, .gif',
-          'Close',
+          'Επιτρέπονται: .jpeg, .jpg, .png, .gif',
+          'Κλείσιμο',
           {
             duration: 3000,
             horizontalPosition: 'center',
@@ -400,8 +400,8 @@ export class FormAdminComponent {
         this.eventsControls.markAllAsTouched(); // Δείξε errors.
 
         this._snackBar.open( // Μύνημα errors.
-          'Υπάρχουν υποχρεωτικά πεδία',
-          'Close',
+          'Επιτρέπονται υποχρεωτικά πεδία',
+          'Κλείσιμο',
           {
             duration: 3000,
             horizontalPosition: 'center',
@@ -476,7 +476,7 @@ export class FormAdminComponent {
 
         this._snackBar.open( // Μύνημα errors.
           'Υπάρχουν υποχρεωτικά πεδία',
-          'Close',
+          'Κλείσιμο',
           {
             duration: 3000,
             horizontalPosition: 'center',

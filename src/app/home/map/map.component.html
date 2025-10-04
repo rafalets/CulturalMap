@@ -3,8 +3,8 @@
     <mat-icon>add</mat-icon>
   </button> -->
   <div class="map" [class.add-cursor]="adding" id="viewMap"></div>
-  <button mat-fab id="addPointBtn" matTooltip="Προσθήκη νέου σημείου"
+  <button  mat-fab id="addPointBtn" matTooltip="Προσθήκη νέου σημείου"
     [ngClass]="adding ? 'add-point-select' : 'add-point-not-select'" (click)="onAddButtonClick()">
-    <mat-icon style="color: green;">add</mat-icon>
+    <mat-icon style="color: green; z-index: 0;">add</mat-icon>
   </button>
 </div>

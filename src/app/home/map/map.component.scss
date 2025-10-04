@@ -23,5 +23,15 @@
 }
 
 .add-cursor {
-    cursor: crosshair; /* Ή pointer, cell, alias, ή custom URL */
-  }
+    cursor: crosshair;
+    /* Ή pointer, cell, alias, ή custom URL */
+}
+
+@media screen and (max-width: 768px) {
+
+    ::ng-deep .esri-feature__content-node {
+        max-height: 18vh !important;
+        display: block !important;
+    }
+
+}

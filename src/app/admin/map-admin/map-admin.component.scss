@@ -29,27 +29,38 @@
 
 
 
-::ng-deep .esri-editor__panel-toolbar {
-    display: none;
-}
+// ::ng-deep .esri-editor__panel-toolbar {
+//     display: none;
+// }
 
 // ::ng-deep .esri-widget__heading {
 //     display: none;
 // }
 
-::ng-deep .esri-editor__feature-templates-container {
-    display: none;
-}
+// ::ng-deep .esri-editor__feature-templates-container {
+//     display: none;
+// }
 
-::ng-deep .esri-editor__panel-content {
-    min-height: auto !important;
-}
+// ::ng-deep .esri-editor__panel-content {
+//     min-height: auto !important;
+// }
 
-::ng-deep .esri-editor__panel-content__section {
-    padding: 2px !important;
-}
+// ::ng-deep .esri-editor__panel-content__section {
+//     padding: 2px !important;
+// }
 
-::ng-deep .esri-feature__content-element .esri-feature-attachments {
-    height: 300px !important;
-    overflow-y: auto !important;
+// ::ng-deep .esri-feature__content-element .esri-feature-attachments {
+//     height: 300px !important;
+//     overflow-y: auto !important;
+// }
+
+
+
+@media screen and (max-width: 768px) {
+
+    ::ng-deep .esri-feature__content-node {
+        max-height: 18vh !important;
+        display: block !important;
+    }
+
 }

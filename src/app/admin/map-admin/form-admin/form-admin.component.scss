@@ -107,3 +107,13 @@
 .cursor-button {
     cursor: pointer
 }
+
+@media screen and (max-width: 768px) {
+
+    .popup-container {
+        height: 100vh;
+        width: 80vw;
+        padding: 10px !important;
+    }
+    
+}
